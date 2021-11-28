@@ -167,6 +167,62 @@ if (now >= fivePM && now <= sixPM) {
 
 }, (1000 * 60) ); 
 
+var tasks = {};
+
+var createTask = function(taskText) {
+  // create elements that make up a task item
+  var taskP = $("<p>").addClass("m-1").text(taskText);
+
+  // append span and p element to parent li
+  taskP.append(taskP);
+
+
+  // append to ul list on the page
+  $("#textArea" + taskText).append(taskP);
+};
+
+var loadTasks = function() {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+
+  // if nothing in localStorage, create a new object to track all task status arrays
+  if (!tasks) {
+    tasks = {
+      texts: []
+    };
+  }
+
+  // loop over object properties
+  $.each(tasks, function(list, arr) {
+    //console.log(list, arr);
+    // then loop over sub-array
+    arr.forEach(function(task) {
+      createTask(task.text);
+    });
+  });
+  console.log(tasks);
+};
+
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+$(".saveBtn").click(function() {
+  // get form values
+  var taskText = $("#textArea").val();
+  
+  if (taskText) {
+    createTask(taskText, "text");
+
+    // save in tasks array
+    tasks.text.push({
+      text: taskText
+    });
+
+    saveTasks();
+  }
+  console.log(click);
+});
+
 $(".list-group").on("click", "p", function() {
   var text = $(this)
   .text()
@@ -210,3 +266,5 @@ var index = $(this)
   // replace textarea with p element
   $(this).replaceWith(taskP);
 })
+
+loadTasks();
