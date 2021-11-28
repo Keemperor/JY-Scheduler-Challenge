@@ -25,59 +25,59 @@ function emea() {
 //console.log(time);
 //console.log(nineAM);
 
- if (now > nineAM && now < tenAM) {
+ if (now >= nineAM && now <= tenAM) {
     // If time is after 9AM or before 10AM, apply present theme to 'colorText'
     $("#colorText").addClass("present").removeClass("future");
-} else if (now > nineAM) {
+} else if (now >= tenAM) {
     // Else use ‘past’ theme
     $("#colorText").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > tenAM && now < elevenAM) {
+if (now >= tenAM && now <= elevenAM) {
   $("#colorText1").addClass("present").removeClass("future");
-} else if (now > tenAM) {
+} else if (now >= elevenAM) {
   $("#colorText1").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > elevenAM && now < twelvePM) {
+if (now >= elevenAM && now <= twelvePM) {
   $("#colorText2").addClass("present").removeClass("future");
-} else if (now > elevenAM) {
+} else if (now >= twelvePM) {
   $("#colorText2").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > twelvePM && now < onePM) {
+if (now >= twelvePM && now <= onePM) {
   $("#colorText3").addClass("present").removeClass("future");
-} else if (now > twelvePM) {
+} else if (now >= onePM) {
   $("#colorText3").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > onePM && now < twoPM) {
+if (now >= onePM && now <= twoPM) {
   $("#colorText4").addClass("present").removeClass("future");
-} else if (now > onePM) {
+} else if (now >= twoPM) {
   $("#colorText4").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > twoPM && now < threePM) {
+if (now >= twoPM && now <= threePM) {
   $("#colorText5").addClass("present").removeClass("future");
-} else if (now > twoPM) {
+} else if (now >= threePM) {
   $("#colorText5").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > threePM && now < fourPM) {
+if (now >= threePM && now <= fourPM) {
   $("#colorText6").addClass("present").removeClass("future");
-} else if (now > threePM) {
+} else if (now >= fourPM) {
   $("#colorText6").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > fourPM && now < fivePM) {
+if (now >= fourPM && now <= fivePM) {
   $("#colorText7").addClass("present").removeClass("future");
-} else if (now > fourPM) {
+} else if (now >= fivePM) {
   $("#colorText7").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > fivePM && now < sixPM) {
+if (now >= fivePM && now <= sixPM) {
   $("#colorText8").addClass("present").removeClass("future");
-} else if (now > fivePM) {
+} else if (now >= sixPM) {
   $("#colorText8").addClass("past").removeClass("present").removeClass("future");
 }
 
@@ -116,54 +116,97 @@ console.log(nineAM);
 }
 
 
-if (now > tenAM && now < elevenAM) {
+if (now >= tenAM && now <= elevenAM) {
   $("#colorText1").addClass("present").removeClass("future");
-} else if (now > tenAM) {
+} else if (now >= elevenAM) {
   $("#colorText1").addClass("past").removeClass("present").removeClass("future");
 }
 
 
-if (now > elevenAM && now < twelvePM) {
+if (now >= elevenAM && now <= twelvePM) {
   $("#colorText2").addClass("present").removeClass("future");
-} else if (now > elevenAM) {
+} else if (now >= twelvePM) {
   $("#colorText2").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > twelvePM && now < onePM) {
+if (now >= twelvePM && now <= onePM) {
   $("#colorText3").addClass("present").removeClass("future");
-} else if (now > twelvePM) {
+} else if (now >= onePM) {
   $("#colorText3").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > onePM && now < twoPM) {
+if (now >= onePM && now <= twoPM) {
   $("#colorText4").addClass("present").removeClass("future");
-} else if (now > onePM) {
+} else if (now >= twoPM) {
   $("#colorText4").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > twoPM && now < threePM) {
+if (now >= twoPM && now <= threePM) {
   $("#colorText5").addClass("present").removeClass("future");
-} else if (now > twoPM) {
+} else if (now >= threePM) {
   $("#colorText5").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > threePM && now < fourPM) {
+if (now >= threePM && now <= fourPM) {
   $("#colorText6").addClass("present").removeClass("future");
-} else if (now > threePM) {
+} else if (now >= fourPM) {
   $("#colorText6").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > fourPM && now < fivePM) {
+if (now >= fourPM && now <= fivePM) {
   $("#colorText7").addClass("present").removeClass("future");
-} else if (now > fourPM) {
+} else if (now >= fivePM) {
   $("#colorText7").addClass("past").removeClass("present").removeClass("future");
 }
 
-if (now > fivePM && now < sixPM) {
+if (now >= fivePM && now <= sixPM) {
   $("#colorText8").addClass("present").removeClass("future");
-} else if (now > fivePM) {
+} else if (now >= sixPM) {
   $("#colorText8").addClass("past").removeClass("present").removeClass("future");
 }
 
-  
 }, (1000 * 60) ); 
+
+$(".list-group").on("click", "p", function() {
+  var text = $(this)
+  .text()
+  .trim();
+
+  var textInput = $("<textarea>")
+  .addClass("form-control")
+  .val(text);
+
+  $(this).replaceWith(textInput);
+
+  textInput.trigger("focus");
+  console.log(this);
+});
+
+$(".list-group").on("blur", "textarea", function() {
+// get the textarea's current value/text
+var text = $(this)
+  .val()
+  .trim();
+
+// get the parent ul's id attribute
+var status = $(this)
+  .closest(".list-group")
+  .attr("id")
+  .replace("list-", "");
+
+// get the task's position in the list of other li elements
+var index = $(this)
+  .closest(".list-group-item")
+  .index();
+
+  tasks[status][index].text = text;
+  saveTasks();
+
+  // recreate p element
+  var taskP = $("<p>")
+  .addClass("m-1")
+  .text(text);
+
+  // replace textarea with p element
+  $(this).replaceWith(taskP);
+})
