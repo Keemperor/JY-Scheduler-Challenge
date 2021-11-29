@@ -167,11 +167,11 @@ if (now >= fivePM && now <= sixPM) {
 
 }, (1000 * 60) ); 
 
-var tasks = {};
+var tasks2 = {};
 
 var createTask = function(taskText) {
   // create elements that make up a task item
-  var taskP = $("<p>").addClass("m-1").text(taskText);
+  var taskP = $("<textarea>").addClass("m-1").text(taskText);
 
   // append span and p element to parent li
   taskP.append(taskP);
@@ -182,28 +182,28 @@ var createTask = function(taskText) {
 };
 
 var loadTasks = function() {
-  tasks = JSON.parse(localStorage.getItem("tasks"));
+  tasks2 = JSON.parse(localStorage.getItem("tasks2"));
 
   // if nothing in localStorage, create a new object to track all task status arrays
-  if (!tasks) {
-    tasks = {
+  if (!tasks2) {
+    tasks2 = {
       texts: []
     };
   }
 
   // loop over object properties
-  $.each(tasks, function(list, arr) {
+  $.each(tasks2, function(list, arr) {
     //console.log(list, arr);
     // then loop over sub-array
-    arr.forEach(function(task) {
-      createTask(task.text);
+    arr.forEach(function(tasks2) {
+      createTask(tasks2.text);
     });
   });
-  console.log(tasks);
+  console.log(tasks2);
 };
 
 var saveTasks = function() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("tasks2", JSON.stringify(tasks2));
 };
 
 $(".saveBtn").click(function() {
@@ -214,13 +214,13 @@ $(".saveBtn").click(function() {
     createTask(taskText, "text");
 
     // save in tasks array
-    tasks.text.push({
+    tasks2.texts.push({
       text: taskText
     });
 
     saveTasks();
   }
-  console.log(click);
+  console.log("click");
 });
 
 $(".list-group").on("click", "p", function() {
@@ -238,7 +238,7 @@ $(".list-group").on("click", "p", function() {
   console.log(this);
 });
 
-$(".list-group").on("blur", "textarea", function() {
+/*$(".list-group").on("blur", "textarea", function() {
 // get the textarea's current value/text
 var text = $(this)
   .val()
@@ -265,6 +265,6 @@ var index = $(this)
 
   // replace textarea with p element
   $(this).replaceWith(taskP);
-})
+})*/
 
 loadTasks();
