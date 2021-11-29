@@ -5,6 +5,7 @@ var colorText = document.getElementById('colorText');
 
 time.textContent = humanReadable;
 
+//initial time check for proper color coding upon start
 function emea() {
   var now = moment();
     
@@ -86,7 +87,7 @@ $(document).ready(function () {
 
 })};
 
-
+//checke each box time and update color as time passes
 setInterval (() => {
   var now = moment();
     
@@ -104,8 +105,8 @@ setInterval (() => {
 
   // var nineAM = moment('09:00AM', "hh:mmA", true);
 //console.log(now);
-console.log(time);
-console.log(nineAM);
+//console.log(time);
+//console.log(nineAM);
 
  if (now >= nineAM && now <= tenAM) {
     // If time is after 9AM or before 10AM, apply present theme to 'colorText'
@@ -167,71 +168,7 @@ if (now >= fivePM && now <= sixPM) {
 
 }, (1000 * 60) ); 
 
-/*tasks = [];
-
-//load tasks
-var loadTasks = function(){
-    tasks = JSON.parse(localStorage.getItem("tasks"))
-    if(!tasks) {
-        tasks={};
-    } ;
-    printTasks(tasks)
-}
-
-var printTasks = function(){
-    $.each(tasks, function(list, arr){
-
-        var taskP = $("<p>").addClass("description task-item-" + list).text(arr)
-        
-        // console.log(list)
-        // console.log(taskP);
-
-        $("#task-item-" + list).replaceWith(taskP);
-    })
- }
-
-//Task update with click
-$(".taskBin").on("click", "p", function(){
-  // console.log("<p> was clicked");
-  var text =$(this)
-    .text()
-    .trim();
-  var textInput =$("<textarea>")
-    .addClass("form-control")
-    .val(text);
-
-  $(this).replaceWith(textInput);
-   textInput.trigger("focus");
-});
-
-//Task needs to be updated
-$(".taskBin").on("blur", "textarea", function() {
-//get the textareas; current value/text
-  var text = $(this)
-    .val()
-    .trim();
-  // console.log(text)
-
-  //recreate p element
-  var taskP = $("<p>")
-    .addClass("taskItem")
-    .text(text);
-
-  // replace textarea with p element
-  $(this).replaceWith(taskP);
-});    
-
-//Save tasks
-$(".saveBtn").on("click", function(){
-     console.log("<save button> was clicked");
-    var index = $(".saveBtn").index(this);
-  //   console.log(index)
-    tasks[index] = $(this).parent().find(".taskItem").text();
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-});
-
-loadTasks();*/
-
+//generate event leistener for save function
 $(document).ready(function () {
   // saveBtn click listener 
   $(".saveBtn").on("click", function () {
