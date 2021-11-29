@@ -167,104 +167,69 @@ if (now >= fivePM && now <= sixPM) {
 
 }, (1000 * 60) ); 
 
-var tasks2 = {};
+tasks = [];
 
-var createTask = function(taskText) {
-  // create elements that make up a task item
-  var taskP = $("<textarea>").addClass("m-1").text(taskText);
+//load tasks
+var loadTasks = function(){
+    tasks = JSON.parse(localStorage.getItem("tasks"))
+    if(!tasks) {
+        tasks={};
+    } ;
+    printTasks(tasks)
+}
 
-  // append span and p element to parent li
-  taskP.append(taskP);
+var printTasks = function(){
+    $.each(tasks, function(list, arr){
 
+        var taskP = $("<p>").addClass("description task-item-" + list).text(arr)
+        
+        // console.log(list)
+        // console.log(taskP);
 
-  // append to ul list on the page
-  $("#textArea" + taskText).append(taskP);
-};
+        $("#task-item-" + list).replaceWith(taskP);
+    })
+ }
 
-var loadTasks = function() {
-  tasks2 = JSON.parse(localStorage.getItem("tasks2"));
-
-  // if nothing in localStorage, create a new object to track all task status arrays
-  if (!tasks2) {
-    tasks2 = {
-      texts: []
-    };
-  }
-
-  // loop over object properties
-  $.each(tasks2, function(list, arr) {
-    //console.log(list, arr);
-    // then loop over sub-array
-    arr.forEach(function(tasks2) {
-      createTask(tasks2.text);
-    });
-  });
-  console.log(tasks2);
-};
-
-var saveTasks = function() {
-  localStorage.setItem("tasks2", JSON.stringify(tasks2));
-};
-
-$(".saveBtn").click(function() {
-  // get form values
-  var taskText = $("#textArea").val();
-  
-  if (taskText) {
-    createTask(taskText, "text");
-
-    // save in tasks array
-    tasks2.texts.push({
-      text: taskText
-    });
-
-    saveTasks();
-  }
-  console.log("click");
-});
-
-$(".list-group").on("click", "p", function() {
-  var text = $(this)
-  .text()
-  .trim();
-
-  var textInput = $("<textarea>")
-  .addClass("form-control")
-  .val(text);
+ 
+//Task update with click
+$(".taskBin").on("click", "p", function(){
+  // console.log("<p> was clicked");
+  var text =$(this)
+    .text()
+    .trim();
+  var textInput =$("<textarea>")
+    .addClass("form-control")
+    .val(text);
 
   $(this).replaceWith(textInput);
-
-  textInput.trigger("focus");
-  console.log(this);
+   textInput.trigger("focus");
 });
 
-/*$(".list-group").on("blur", "textarea", function() {
-// get the textarea's current value/text
-var text = $(this)
-  .val()
-  .trim();
+//Task needs to be updated
+$(".taskBin").on("blur", "textarea", function() {
+//get the textareas; current value/text
+  var text = $(this)
+    .val()
+    .trim();
+  // console.log(text)
 
-// get the parent ul's id attribute
-var status = $(this)
-  .closest(".list-group")
-  .attr("id")
-  .replace("list-", "");
-
-// get the task's position in the list of other li elements
-var index = $(this)
-  .closest(".list-group-item")
-  .index();
-
-  tasks[status][index].text = text;
-  saveTasks();
-
-  // recreate p element
+  //recreate p element
   var taskP = $("<p>")
-  .addClass("m-1")
-  .text(text);
+    .addClass("taskItem")
+    .text(text);
 
   // replace textarea with p element
   $(this).replaceWith(taskP);
-})*/
+});    
+
+//Save tasks
+$(".saveBtn").on("click", function(){
+  //   console.log("<save button> was clicked");
+    var index = $(".saveBtn").index(this);
+  //   console.log(index)
+    tasks[index] = $(this).parent().find(".taskItem").text();
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+});
+
 
 loadTasks();
